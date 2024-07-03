@@ -15,12 +15,7 @@ func main() {
 }
 
 func view(w http.ResponseWriter, r *http.Request) error {
-	var clientIp string
-	if addr, err := net.LookupHost(r.URL.Hostname()); err != nil {
-		return err
-	} else {
-		clientIp = addr[0]
-	}
+	clientIp := getClientIp(r)
 
 	location, err := getClientLocation(clientIp)
 	if err != nil {
