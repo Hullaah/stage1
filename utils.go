@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+ "strings"
 )
 
 type appHandler func(w http.ResponseWriter, r *http.Request) error
