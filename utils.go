@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+ "net"
 	"net/http"
 	"fmt"
 	"io"
@@ -48,5 +49,29 @@ func getLocationWeather(location *Location) (float32, error) {
 	var weather struct {Main struct {Temp float32}}
 	json.Unmarshal(body, &weather)
 	return weather.Main.Temp, nil
+}
+
+func getClientIP(r *http.Request) string {
+    // Check the X-Forwarded-For header first
+    ip := r.Header.Get("X-Forwarded-For")
+    if ip != "" {
+        // X-Forwarded-For can contain multiple IPs, the first one is the client IP
+        ips := strings.Split(ip, ",")
+        return strings.TrimSpace(ips[0])
+    }
+
+    // If X-Forwarded-For is not set, check the X-Real-IP header
+    ip = r.Header.Get("X-Real-IP")
+    if ip != "" {
+        return ip
+    }
+
+    // Fallback to the remote address
+    ip, _, err := net.SplitHostPort(r.RemoteAddr)
+    if err != nil {
+        return r.RemoteAddr
+    }
+
+    return ip
 }
 
