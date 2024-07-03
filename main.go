@@ -16,7 +16,7 @@ func main() {
 
 func view(w http.ResponseWriter, r *http.Request) error {
 	var clientIp string
-	if addr, err := net.LookupHost("google.com"); err != nil {
+	if addr, err := net.LookupHost(r.URL.Hostname()); err != nil {
 		return err
 	} else {
 		clientIp = addr[0]
