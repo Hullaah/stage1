@@ -15,7 +15,7 @@ func main() {
 }
 
 func view(w http.ResponseWriter, r *http.Request) error {
-	clientIp := getClientIp(r)
+	clientIp := getClientIP(r)
 
 	location, err := getClientLocation(clientIp)
 	if err != nil {
