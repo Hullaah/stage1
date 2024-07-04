@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"github.com/joho/godotenv"
+	"net/http"
 )
 
 func main() {
